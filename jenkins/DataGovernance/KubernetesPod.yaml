@@ -1,0 +1,73 @@
+apiVersion: v1
+
+kind: Pod
+
+metadata:
+  name: dg-performance-pod
+  labels:
+    name: dg-performance-pod
+
+spec:
+  hostAliases:
+    - ip: "127.0.0.1"
+      hostnames:
+        - "pingdatagovernance"
+        - "jmeter"
+        - "upstream-api"
+        - "pingdataconsole"
+
+  containers:
+  - name: pingdatagovernance
+    image: 574076504146.dkr.ecr.us-west-2.amazonaws.com/snapshot-builds/pingdatagovernance:latest
+    # image: '574076504146.dkr.ecr.us-west-2.amazonaws.com/snapshot-builds/pingdatagovernance:8.3.0.0-SNAPSHOT-alpine-az11-20210112'
+    # image: pingidentity/pingdatagovernance:latest
+    imagePullPolicy: Always
+    env: 
+      - name: SERVER_PROFILE_URL
+        # value: https://github.com/pingidentity/pingidentity-server-profiles.git
+        value: https://github.com/gtom-ping/pingidentity-server-profiles.git
+      - name: SERVER_PROFILE_PATH
+        # value: perf-testing/pingdatagovernance
+        value: pingdatagovernance
+      - name: PING_IDENTITY_ACCEPT_EULA
+        value: "YES"
+    envFrom:
+      - secretRef:
+          name: devops-secret
+          optional: true
+    ports:
+      - containerPort: 80
+      - containerPort: 443
+      - containerPort: 636
+    resources:
+      limits:
+        memory: 3Gi
+        cpu: 3
+
+  - name: upstream-api
+    image: samirgandhi/dg-qa-upstream-api
+    ports:
+      - containerPort: 3000
+    resources:
+      limits:
+        memory: 2Gi
+        cpu: 2
+
+  # - name: pingdataconsole
+  #   image: pingidentity/pingdataconsole:edge
+  #   ports:
+  #     - containerPort: 8443 
+  #   resources:
+  #     limits:
+  #       memory: 1Gi
+  #       cpu: 1
+
+  - name: jmeter
+    image: justb4/jmeter:latest
+    tty: true
+    command:
+      - "cat"
+    resources:
+      limits:
+        memory: 2Gi
+        cpu: 2
