@@ -6,10 +6,13 @@ pipeline {
     }
 
     stages {
-        stage('Clone JMeter Scripts') {
+        stage('Configure JMeter') {
             steps {
                 container('jmeter') {
                     git branch: 'main', url: 'https://github.com/gtom-ping/perf-pingdata-lab'
+                    sh 'cp jmeter-files/user.properties ${JMETER_BIN}'
+                    sh 'cp jmeter-files/jaas.conf ${JMETER_BIN}'
+                    sh 'cp jmeter-files/krb5.conf ${JMETER_BIN}'
                 }
             }
         }
