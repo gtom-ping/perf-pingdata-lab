@@ -28,7 +28,6 @@ pipeline {
             steps {
                 container('jmeter') {
                     sh '${JMETER_BIN}/jmeter -n -f -t jmeter-files/deny-api.jmx -l deny-api.csv -q jmeter-files/test.properties'
-                    // perfReport errorFailedThreshold: 0, sourceDataFiles: 'deny-api.csv'
                     perfReport compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'deny-api.csv'
                 }
             }
