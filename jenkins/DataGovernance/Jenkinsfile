@@ -1,7 +1,7 @@
 pipeline {
     agent {
         kubernetes {
-            yamlFile 'DataGovernance/KubernetesPod.yaml'
+            yamlFile 'jenkins/DataGovernance/KubernetesPod.yaml'
         }
     }
 
@@ -9,7 +9,7 @@ pipeline {
         stage('Clone JMeter Scripts') {
             steps {
                 container('jmeter') {
-                    git branch: 'main', url: 'https://github.com/gtom-ping/jmx-files'
+                    git branch: 'main', url: 'https://github.com/gtom-ping/perf-pingdata-lab'
                 }
             }
         }
@@ -17,8 +17,7 @@ pipeline {
         stage('Deny based on Access Token - Allow') {
             steps {
                 container('jmeter') {
-                    sh '${JMETER_BIN}/jmeter -n -f -t access-api.jmx -l access-api.csv -q test.properties'
-                    // perfReport errorFailedThreshold: 0, sourceDataFiles: 'access-api.csv'
+                    sh '${JMETER_BIN}/jmeter -n -f -t jmeter-files/access-api.jmx -l access-api.csv -q jmeter-files/test.properties'
                     perfReport compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'access-api.csv'
                 }
             }
@@ -28,7 +27,7 @@ pipeline {
         stage('Deny based on Access Token - Deny') {
             steps {
                 container('jmeter') {
-                    sh '${JMETER_BIN}/jmeter -n -f -t deny-api.jmx -l deny-api.csv -q test.properties'
+                    sh '${JMETER_BIN}/jmeter -n -f -t jmeter-files/deny-api.jmx -l deny-api.csv -q jmeter-files/test.properties'
                     // perfReport errorFailedThreshold: 0, sourceDataFiles: 'deny-api.csv'
                     perfReport compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'deny-api.csv'
                 }

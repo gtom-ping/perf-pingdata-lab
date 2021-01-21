@@ -25,10 +25,10 @@ spec:
     env: 
       - name: SERVER_PROFILE_URL
         # value: https://github.com/pingidentity/pingidentity-server-profiles.git
-        value: https://github.com/gtom-ping/pingidentity-server-profiles.git
+        value: https://github.com/gtom-ping/perf-pingdata-lab.git
       - name: SERVER_PROFILE_PATH
         # value: perf-testing/pingdatagovernance
-        value: pingdatagovernance
+        value: pingidentity-server-profiles/pingdatagovernance
       - name: PING_IDENTITY_ACCEPT_EULA
         value: "YES"
     envFrom:
@@ -42,7 +42,7 @@ spec:
     resources:
       limits:
         memory: 3Gi
-        cpu: 3
+        cpu: "3"
 
   - name: upstream-api
     image: samirgandhi/dg-qa-upstream-api
@@ -51,7 +51,7 @@ spec:
     resources:
       limits:
         memory: 2Gi
-        cpu: 2
+        cpu: "2"
 
   # - name: pingdataconsole
   #   image: pingidentity/pingdataconsole:edge
@@ -70,4 +70,4 @@ spec:
     resources:
       limits:
         memory: 2Gi
-        cpu: 2
+        cpu: "2"
