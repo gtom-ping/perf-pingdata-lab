@@ -9,14 +9,12 @@ pipeline {
         stage('Configure JMeter') {
             steps {
                 container('jmeter') {
+                    sh 'pwd'
                     git branch: 'main', url: 'https://github.com/gtom-ping/perf-pingdata-lab'
+                    sh 'ls'
                     sh 'cp jmeter-files/bin/user.properties ${SERVER_BITS_DIR}'
                     sh 'cp jmeter-files/bin/jaas.conf ${SERVER_BITS_DIR}'
                     sh 'cp jmeter-files/bin/krb5.conf ${SERVER_BITS_DIR}'
-                    pwd()
-                    timeout(time: 1, unit: 'HOURS') {
-    // some block
-}
                 }
             }
         }
