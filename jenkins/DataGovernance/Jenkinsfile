@@ -13,6 +13,7 @@ pipeline {
                     sh 'cp jmeter-files/user.properties ${JMETER_BIN}'
                     sh 'cp jmeter-files/jaas.conf ${JMETER_BIN}'
                     sh 'cp jmeter-files/krb5.conf ${JMETER_BIN}'
+                    sh 'echo ${${IMAGE_VERSION}'
                 }
             }
         }

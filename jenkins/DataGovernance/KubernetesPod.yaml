@@ -63,7 +63,7 @@ spec:
   #       cpu: 1
 
   - name: jmeter
-    image: justb4/jmeter:latest
+    image: pingidentity/apache-jmeter:latest
     tty: true
     command:
       - "cat"
