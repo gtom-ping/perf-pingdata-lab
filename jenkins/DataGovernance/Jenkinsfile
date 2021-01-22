@@ -16,8 +16,8 @@ pipeline {
             steps {
                 container('jmeter') {
                     git branch: 'main', url: 'https://github.com/gtom-ping/perf-pingdata-lab'
-                    sh 'echo ${CLONED_JMETER_BIN}'
-                    sh 'echo {SERVER_BITS_DIR}'
+                    sh "echo ${CLONED_JMETER_BIN}"
+                    sh 'echo ${SERVER_BITS_DIR}'
                     sh 'cp ${CLONED_JMETER_BIN}/user.properties ${SERVER_BITS_DIR}/bin'
                     sh 'cp ${CLONED_JMETER_BIN}/jaas.conf ${SERVER_BITS_DIR}/bin'
                     sh 'cp ${CLONED_JMETER_BIN}/krb5.conf ${SERVER_BITS_DIR}/bin'
