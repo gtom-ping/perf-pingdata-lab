@@ -64,6 +64,13 @@ spec:
 
   - name: jmeter
     image: pingidentity/apache-jmeter:latest
+    env:
+      - name: SERVER_PROFILE_URL
+        value: https://github.com/gtom-ping/perf-pingdata-lab.git
+      - name: SERVER_PROFILE_PATH
+        value: jmeter-files
+      - name: MAX_HEAP_SIZE
+        value: 1g
     tty: true
     command:
       - "cat"
