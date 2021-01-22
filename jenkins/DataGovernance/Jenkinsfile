@@ -5,22 +5,12 @@ pipeline {
         }
     }
 
-    environment {
-        CLONED_JMETER_HOME = 'apache-jmeter'
-        CLONED_JMETER_BIN = '${CLONED_JMETER_HOME}/bin'
-        CLONED_JMETER_SCRIPTS = '${CLONED_JMETER_HOME}/scripts'
-    }
-
     stages {
         stage('Configure JMeter') {
             steps {
                 container('jmeter') {
                     git branch: 'main', url: 'https://github.com/gtom-ping/perf-pingdata-lab'
-                    sh "echo ${CLONED_JMETER_BIN}"
-                    sh 'echo ${SERVER_BITS_DIR}'
-                    sh "cp ${CLONED_JMETER_BIN}/user.properties "'${SERVER_BITS_DIR}/bin'
-                    sh "cp ${CLONED_JMETER_BIN}/jaas.conf "'${SERVER_BITS_DIR}/bin'
-                    sh "cp ${CLONED_JMETER_BIN}/krb5.conf "'${SERVER_BITS_DIR}/bin'
+                    sh 'cp apache-jmeter/bin/* ${SERVER_BITS_DIR}/bin'
                 }
             }
         }
@@ -28,7 +18,7 @@ pipeline {
         stage('Deny based on Access Token - Allow') {
             steps {
                 container('jmeter') {
-                    sh '${SERVER_BITS_DIR}/bin/jmeter -n -f -t '"${CLONED_JMETER_SCRIPTS}/access-api.jmx -l access-api.csv -q ${CLONED_JMETER_SCRIPTS}/test.properties"
+                    sh '${SERVER_BITS_DIR}/bin/jmeter -n -f -t apache-jmeter/scripts/access-api.jmx -l access-api.csv -q apache-jmeter/scripts/test.properties'
                     perfReport compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'access-api.csv'
                 }
             }
@@ -38,7 +28,7 @@ pipeline {
         stage('Deny based on Access Token - Deny') {
             steps {
                 container('jmeter') {
-                    sh '${SERVER_BITS_DIR}/bin/jmeter -n -f -t '"${CLONED_JMETER_SCRIPTS}/deny-api.jmx -l deny-api.csv -q ${CLONED_JMETER_SCRIPTS}/test.properties"
+                    sh '${SERVER_BITS_DIR}/bin/jmeter -n -f -t apache-jmeter/scripts/deny-api.jmx -l deny-api.csv -q apache-jmeter/scripts/test.properties'
                     perfReport compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'deny-api.csv'
                 }
             }
