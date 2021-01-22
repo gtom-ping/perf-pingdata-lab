@@ -10,9 +10,9 @@ pipeline {
             steps {
                 container('jmeter') {
                     git branch: 'main', url: 'https://github.com/gtom-ping/perf-pingdata-lab'
-                    sh 'cp jmeter-files/user.properties ${SERVER_ROOT_DIR}'
-                    sh 'cp jmeter-files/jaas.conf ${SERVER_ROOT_DIR}'
-                    sh 'cp jmeter-files/krb5.conf ${SERVER_ROOT_DIR}'
+                    sh 'cp jmeter-files/bin/user.properties ${SERVER_ROOT_DIR}'
+                    sh 'cp jmeter-files/bin/jaas.conf ${SERVER_ROOT_DIR}'
+                    sh 'cp jmeter-files/bin/krb5.conf ${SERVER_ROOT_DIR}'
                 }
             }
         }
