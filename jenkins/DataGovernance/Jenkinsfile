@@ -6,8 +6,8 @@ pipeline {
     }
 
     environment {
-        THREADS='${THREADS}'
-        ITERATIONS='${ITERATIONS}'
+        THREADS="${THREADS}"
+        ITERATIONS="${ITERATIONS}"
     }
 
     stages {
