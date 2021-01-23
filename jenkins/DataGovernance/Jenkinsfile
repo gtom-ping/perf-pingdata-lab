@@ -25,7 +25,7 @@ pipeline {
             steps {
                 container('jmeter') {
                     sh '${SERVER_BITS_DIR}/bin/jmeter -n -f -t apache-jmeter/scripts/access-api.jmx -l access-api.csv -q apache-jmeter/scripts/test.properties'
-                    perfReport compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'access-api.csv'
+                    perfReport errorFailedThreshold: 0, errorUnstableThreshold: 0, compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'access-api.csv'
                 }
             }
         }
@@ -35,7 +35,7 @@ pipeline {
             steps {
                 container('jmeter') {
                     sh '${SERVER_BITS_DIR}/bin/jmeter -n -f -t apache-jmeter/scripts/deny-api.jmx -l deny-api.csv -q apache-jmeter/scripts/test.properties'
-                    perfReport compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'deny-api.csv'
+                    perfReport errorFailedThreshold: 0, errorUnstableThreshold: 0, compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'deny-api.csv'
                 }
             }
         }
