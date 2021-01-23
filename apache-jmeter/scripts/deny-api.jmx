@@ -69,12 +69,12 @@
           <collectionProp name="Arguments.arguments">
             <elementProp name="DG_HOST" elementType="Argument">
               <stringProp name="Argument.name">DG_HOST</stringProp>
-              <stringProp name="Argument.value">${__property(DG_HOST)}</stringProp>
+              <stringProp name="Argument.value">${__property(PDG_ENGINE_PRIVATE_HOSTNAME)}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="DG_PORT" elementType="Argument">
               <stringProp name="Argument.name">DG_PORT</stringProp>
-              <stringProp name="Argument.value">${__property(DG_PORT)}</stringProp>
+              <stringProp name="Argument.value">${__property(HTTPS_PORT)}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>
