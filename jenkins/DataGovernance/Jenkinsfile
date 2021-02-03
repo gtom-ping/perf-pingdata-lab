@@ -5,11 +5,6 @@ pipeline {
         }
     }
 
-    // environment {
-    //     THREADS="${THREADS}"
-    //     ITERATIONS="${ITERATIONS}"
-    // }
-
     stages {
         stage('Configure JMeter') {
             steps {

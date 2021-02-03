@@ -12,15 +12,16 @@ spec:
     - ip: "127.0.0.1"
       hostnames:
         - "pingdatagovernance"
-        - "jmeter"
-        - "upstream-api"
         - "pingdataconsole"
+        - "jmeter"
+        - "perf-service"
+        - "upstream-api"
 
   containers:
   - name: pingdatagovernance
-    image: 574076504146.dkr.ecr.us-west-2.amazonaws.com/snapshot-builds/pingdatagovernance:latest
+    # image: 574076504146.dkr.ecr.us-west-2.amazonaws.com/snapshot-builds/pingdatagovernance:latest
     # image: '574076504146.dkr.ecr.us-west-2.amazonaws.com/snapshot-builds/pingdatagovernance:8.3.0.0-SNAPSHOT-alpine-az11-20210112'
-    # image: pingidentity/pingdatagovernance:latest
+    image: pingidentity/pingdatagovernance:latest
     imagePullPolicy: Always
     env: 
       - name: SERVER_PROFILE_URL
@@ -41,8 +42,8 @@ spec:
       - containerPort: 636
     resources:
       limits:
-        memory: 3Gi
-        cpu: "3"
+        memory: 2Gi
+        cpu: "2"
 
   - name: upstream-api
     image: samirgandhi/dg-qa-upstream-api
@@ -52,6 +53,15 @@ spec:
       limits:
         memory: 2Gi
         cpu: "2"
+
+  # - name: perf-service
+  #   image: pingcloud-docker.jfrog.io/pingidentity/perf-service:latest
+  #   ports:
+  #     - containerPort: 8080
+  #   resources:
+  #     limits: 
+  #       memory: 1.5Gi
+  #       cpu: "1.5"
 
   # - name: pingdataconsole
   #   image: pingidentity/pingdataconsole:edge
