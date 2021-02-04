@@ -14,7 +14,7 @@ spec:
         - "pingdatagovernance"
         - "pingdataconsole"
         - "jmeter"
-        - "perf-service"
+        # - "perf-service"
         - "upstream-api"
 
   containers:
@@ -42,8 +42,8 @@ spec:
       - containerPort: 636
     resources:
       limits:
-        memory: 2Gi
-        cpu: "2"
+        memory: 1.5Gi
+        cpu: "1.5"
 
   - name: upstream-api
     image: samirgandhi/dg-qa-upstream-api
@@ -51,8 +51,8 @@ spec:
       - containerPort: 3000
     resources:
       limits:
-        memory: 2Gi
-        cpu: "2"
+        memory: 1Gi
+        cpu: "1"
 
   # - name: perf-service
   #   image: pingcloud-docker.jfrog.io/pingidentity/perf-service:latest
@@ -70,7 +70,7 @@ spec:
   #   resources:
   #     limits:
   #       memory: 1Gi
-  #       cpu: 1
+  #       cpu: "1"
 
   - name: jmeter
     image: pingidentity/apache-jmeter:latest
@@ -86,5 +86,5 @@ spec:
       - "cat"
     resources:
       limits:
-        memory: 2Gi
-        cpu: "2"
+        memory: 1.5Gi
+        cpu: "1.5"

@@ -12,6 +12,7 @@ pipeline {
                     git branch: 'main', url: 'https://github.com/gtom-ping/perf-pingdata-lab'
                     sh 'cp apache-jmeter/bin/* ${SERVER_BITS_DIR}/bin'
                     sh 'printenv'
+                    sleep 60
                 }
             }
         }
