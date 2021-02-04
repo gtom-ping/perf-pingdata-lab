@@ -17,12 +17,15 @@ spec:
         # - "perf-service"
         - "upstream-api"
 
+  imagePullSecrets:
+  - name: regcred
+
   containers:
   - name: pingdatagovernance
     image: 574076504146.dkr.ecr.us-west-2.amazonaws.com/snapshot-builds/pingdatagovernance:latest
     # image: '574076504146.dkr.ecr.us-west-2.amazonaws.com/snapshot-builds/pingdatagovernance:8.3.0.0-SNAPSHOT-alpine-az11-20210112'
     # image: pingidentity/pingdatagovernance:latest
-    imagePullPolicy: Always
+    # imagePullPolicy: Always
     env: 
       - name: SERVER_PROFILE_URL
         # value: https://github.com/pingidentity/pingidentity-server-profiles.git
