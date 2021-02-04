@@ -25,7 +25,7 @@ spec:
     image: 574076504146.dkr.ecr.us-west-2.amazonaws.com/snapshot-builds/pingdatagovernance:latest
     # image: '574076504146.dkr.ecr.us-west-2.amazonaws.com/snapshot-builds/pingdatagovernance:8.3.0.0-SNAPSHOT-alpine-az11-20210112'
     # image: pingidentity/pingdatagovernance:latest
-    # imagePullPolicy: Always
+    imagePullPolicy: Never
     env: 
       - name: SERVER_PROFILE_URL
         # value: https://github.com/pingidentity/pingidentity-server-profiles.git
