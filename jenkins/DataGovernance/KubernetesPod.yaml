@@ -14,18 +14,15 @@ spec:
         - "pingdatagovernance"
         - "pingdataconsole"
         - "jmeter"
-        # - "perf-service"
+        - "perf-service"
         - "upstream-api"
-
-  imagePullSecrets:
-  - name: regcred
 
   containers:
   - name: pingdatagovernance
     image: 574076504146.dkr.ecr.us-west-2.amazonaws.com/snapshot-builds/pingdatagovernance:latest
     # image: '574076504146.dkr.ecr.us-west-2.amazonaws.com/snapshot-builds/pingdatagovernance:8.3.0.0-SNAPSHOT-alpine-az11-20210112'
     # image: pingidentity/pingdatagovernance:latest
-    imagePullPolicy: Never
+    imagePullPolicy: Always
     env: 
       - name: SERVER_PROFILE_URL
         # value: https://github.com/pingidentity/pingidentity-server-profiles.git
@@ -45,8 +42,8 @@ spec:
       - containerPort: 636
     resources:
       limits:
-        memory: 1.5Gi
-        cpu: "1.5"
+        memory: 5Gi
+        cpu: "5"
 
   - name: upstream-api
     image: samirgandhi/dg-qa-upstream-api
@@ -54,8 +51,8 @@ spec:
       - containerPort: 3000
     resources:
       limits:
-        memory: 1Gi
-        cpu: "1"
+        memory: 2Gi
+        cpu: "2"
 
   # - name: perf-service
   #   image: pingcloud-docker.jfrog.io/pingidentity/perf-service:latest
@@ -65,15 +62,6 @@ spec:
   #     limits: 
   #       memory: 1.5Gi
   #       cpu: "1.5"
-
-  # - name: pingdataconsole
-  #   image: pingidentity/pingdataconsole:edge
-  #   ports:
-  #     - containerPort: 8443 
-  #   resources:
-  #     limits:
-  #       memory: 1Gi
-  #       cpu: "1"
 
   - name: jmeter
     image: pingidentity/apache-jmeter:latest
@@ -89,5 +77,14 @@ spec:
       - "cat"
     resources:
       limits:
-        memory: 1.5Gi
-        cpu: "1.5"
+        memory: 4Gi
+        cpu: "4"
+
+  # - name: pingdataconsole
+  #   image: pingidentity/pingdataconsole:edge
+  #   ports:
+  #     - containerPort: 8443 
+  #   resources:
+  #     limits:
+  #       memory: 1Gi
+  #       cpu: "1"
