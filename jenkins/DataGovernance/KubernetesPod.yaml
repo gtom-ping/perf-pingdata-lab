@@ -17,6 +17,9 @@ spec:
         - "perf-service"
         - "upstream-api"
 
+  imagePullSecrets:
+  - name: gte-secret
+
   containers:
   - name: pingdatagovernance
     image: 574076504146.dkr.ecr.us-west-2.amazonaws.com/snapshot-builds/pingdatagovernance:latest
