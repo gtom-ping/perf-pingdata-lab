@@ -16,10 +16,8 @@ pipeline {
         }
 
         stage('Wait for Product Availability') {
-            when {
-                expression {
-                    httpRequest url: "https://pingdatagovernance:443/available-or-degraded-state", ignoreSslErrors: true
-                }
+            steps {
+                sh 'timeout 360 wget --retry-connrefused --tries=6 --waitretry=60 -q https://pingdatagovernance:443/available-or-degraded-state -O /dev/null'
             }
         }
 
