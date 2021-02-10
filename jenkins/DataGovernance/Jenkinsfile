@@ -18,7 +18,7 @@ pipeline {
         stage('Wait for Product Availability') {
             steps {
                 waitUntil() {
-}                   httpRequest url: 'https://pingdatagovernance:7443/available-or-degraded-state', ignoreSslErrors: true, validResponseCodes: '200'
+}                   httpRequest 'https://pingdatagovernance:7443/available-or-degraded-state', ignoreSslErrors: true, validResponseCodes: '200'
             }
         }
 
