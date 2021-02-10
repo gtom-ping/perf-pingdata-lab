@@ -19,7 +19,7 @@ pipeline {
             steps {
                 waitUntil {
                    response = httpRequest url: 'https://pingdatagovernance:443/available-or-degraded-state', ignoreSslErrors: true
-                   response.getStatus == 200
+                   response.getStatus() == 200
                 }
             }
         }
