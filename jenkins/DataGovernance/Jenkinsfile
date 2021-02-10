@@ -3,36 +3,36 @@ pipeline {
     agent {
         kubernetes {
             yamlFile 'jenkins/DataGovernance/KubernetesPod.yaml'
+            defaultContainer 'jmeter'
         }
     }
 
     stages {
         stage('Configure JMeter') {
             steps {
-                container('jmeter') {
-                    git branch: 'main', url: 'https://github.com/gtom-ping/perf-pingdata-lab'
-                    sh 'cp apache-jmeter/bin/* ${SERVER_BITS_DIR}/bin'
-                    sleep 60
-                }
+                git branch: 'main', url: 'https://github.com/gtom-ping/perf-pingdata-lab'
+                sh 'cp apache-jmeter/bin/* ${SERVER_BITS_DIR}/bin'
+            }
+        }
+
+        stage('Wait for Product Availability') {
+            steps {
+                waitUntil() {
+}                   httpRequest ignoreSslErrors: true, url: 'https://pingdatagovernance:7443/available-or-degraded-state', validResponseCodes: '200'
             }
         }
 
         stage('Deny based on Access Token - Allow') {
             steps {
-                container('jmeter') {
-                    sh '${SERVER_BITS_DIR}/bin/jmeter -n -f -t apache-jmeter/scripts/access-api.jmx -l access-api.csv -q apache-jmeter/scripts/test.properties'
-                    perfReport errorFailedThreshold: 0, errorUnstableThreshold: 0, compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'access-api.csv'
-                }
+                sh '${SERVER_BITS_DIR}/bin/jmeter -n -f -t apache-jmeter/scripts/access-api.jmx -l access-api.csv -q apache-jmeter/scripts/test.properties'
+                perfReport errorFailedThreshold: 0, errorUnstableThreshold: 0, compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'access-api.csv'
             }
         }
-        
 
         stage('Deny based on Access Token - Deny') {
             steps {
-                container('jmeter') {
-                    sh '${SERVER_BITS_DIR}/bin/jmeter -n -f -t apache-jmeter/scripts/deny-api.jmx -l deny-api.csv -q apache-jmeter/scripts/test.properties'
-                    perfReport errorFailedThreshold: 0, errorUnstableThreshold: 0, compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'deny-api.csv'
-                }
+                sh '${SERVER_BITS_DIR}/bin/jmeter -n -f -t apache-jmeter/scripts/deny-api.jmx -l deny-api.csv -q apache-jmeter/scripts/test.properties'
+                perfReport errorFailedThreshold: 0, errorUnstableThreshold: 0, compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'deny-api.csv'
             }
         }
     }
