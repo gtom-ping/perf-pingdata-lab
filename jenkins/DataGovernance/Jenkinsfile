@@ -18,8 +18,7 @@ pipeline {
         stage('Wait for Product Availability') {
             steps {
                 waitUntil {
-                   response = httpRequest url: 'https://pingdatagovernance:443/available-or-degraded-state', ignoreSslErrors: true
-                   response.getStatus() == 200
+                   httpRequest url: 'https://pingdatagovernance:443/available-or-degraded-state', ignoreSslErrors: true
                 }
             }
         }
