@@ -12,16 +12,16 @@ pipeline {
             steps {
                 git branch: 'main', url: 'https://github.com/gtom-ping/perf-pingdata-lab'
                 sh 'cp apache-jmeter/bin/* ${SERVER_BITS_DIR}/bin'
-                sleep 60
             }
         }
 
-//         stage('Wait for Product Availability') {
-//             steps {
-//                 waitUntil {
-// }                   httpRequest url: 'https://pingdatagovernance:443/available-or-degraded-state', ignoreSslErrors: true, validResponseCodes: '200'
-//             }
-//         }
+        stage('Wait for Product Availability') {
+            steps {
+                waitUntil {
+                   httpRequest url: 'https://pingdatagovernance:443/available-or-degraded-state', ignoreSslErrors: true, validResponseCodes: '200'
+                }
+            }
+        }
 
         stage('Deny based on Access Token - Allow') {
             steps {
