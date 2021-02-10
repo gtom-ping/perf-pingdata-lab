@@ -80,8 +80,8 @@ spec:
       - "cat"
     resources:
       limits:
-        memory: 4Gi
-        cpu: "4"
+        memory: 3Gi
+        cpu: "3"
 
   # - name: pingdataconsole
   #   image: pingidentity/pingdataconsole:edge
