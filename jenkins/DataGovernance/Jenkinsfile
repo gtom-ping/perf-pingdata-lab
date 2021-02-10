@@ -17,9 +17,7 @@ pipeline {
 
         stage('Wait for Product Availability') {
             steps {
-                waitUntil {
-                    sh 'nc -vz pingdatagovernance 443'
-                }
+                sleep (60)
             }
         }
 
