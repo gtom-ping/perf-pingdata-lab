@@ -54,8 +54,8 @@ spec:
       - containerPort: 3000
     resources:
       limits:
-        memory: 2Gi
-        cpu: "2"
+        memory: 1.5Gi
+        cpu: "1.5"
 
   # - name: perf-service
   #   image: pingcloud-docker.jfrog.io/pingidentity/perf-service:latest
