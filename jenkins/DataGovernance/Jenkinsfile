@@ -7,6 +7,10 @@ pipeline {
         }
     }
 
+    options {
+        timestamps()
+    }
+
     stages {
         stage('Configure JMeter') {
             steps {
