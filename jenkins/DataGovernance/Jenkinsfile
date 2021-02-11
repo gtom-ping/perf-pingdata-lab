@@ -1,14 +1,14 @@
 pipeline {
     
+    options {
+        timestamps()
+    }
+
     agent {
         kubernetes {
             yamlFile 'jenkins/DataGovernance/KubernetesPod.yaml'
             defaultContainer 'jmeter'
         }
-    }
-
-    options {
-        timestamps()
     }
 
     stages {
@@ -33,14 +33,16 @@ pipeline {
         stage('Deny based on Access Token - Allow') {
             steps {
                 sh '${SERVER_BITS_DIR}/bin/jmeter -n -f -t apache-jmeter/scripts/access-api.jmx -l access-api.csv -q apache-jmeter/scripts/test.properties'
-                perfReport errorFailedThreshold: 0, errorUnstableThreshold: 0, compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'access-api.csv'
+                //perfReport errorFailedThreshold: 0, errorUnstableThreshold: 0, compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'access-api.csv'
+                perfReport compareBuildPrevious: true, modeOfThreshold: true, modePerformancePerTestCase: true, modeThroughput: true, relativeUnstableThresholdNegative: 5.0, relativeUnstableThresholdPositive: 5.0, sourceDataFiles: 'access-api.csv'
             }
         }
 
         stage('Deny based on Access Token - Deny') {
             steps {
                 sh '${SERVER_BITS_DIR}/bin/jmeter -n -f -t apache-jmeter/scripts/deny-api.jmx -l deny-api.csv -q apache-jmeter/scripts/test.properties'
-                perfReport errorFailedThreshold: 0, errorUnstableThreshold: 0, compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'deny-api.csv'
+                //perfReport errorFailedThreshold: 0, errorUnstableThreshold: 0, compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'deny-api.csv'
+                perfReport compareBuildPrevious: true, modeOfThreshold: true, modePerformancePerTestCase: true, modeThroughput: true, relativeUnstableThresholdNegative: 5.0, relativeUnstableThresholdPositive: 5.0, sourceDataFiles: 'deny-api.csv'
             }
         }
     }
