@@ -19,7 +19,7 @@ pipeline {
             steps {
                 waitUntil {
 					script {
-            			response = httpRequest ignoreSslErrors: true, url: 'https://pingdatagovernance:443/available-or-degraded-state', validResponseCodes: '200'
+            			response = httpRequest ignoreSslErrors: true, url: 'https://pingdatagovernance:443/available-or-degraded-state', validResponseCodes: '100:399'
 						response.status == 200
 					}
 				}
