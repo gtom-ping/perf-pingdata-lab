@@ -17,7 +17,7 @@ pipeline {
 
         stage('Wait for Product Availability') {
             steps {
-                waitUntil {
+                waitUntil(initialRecurrencePeriod: 15000) {
 					script {
             			response = httpRequest ignoreSslErrors: true, url: 'https://pingdatagovernance:443/available-or-degraded-state', validResponseCodes: '100:599'
 						response.status == 200
