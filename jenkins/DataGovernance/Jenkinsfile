@@ -27,6 +27,9 @@ pipeline {
 						response.status == 200 || response.status == 503
 					}
 				}
+                container('pingdatagovernance') {
+                    sh 'printenv'
+                }
             }
         }
 
