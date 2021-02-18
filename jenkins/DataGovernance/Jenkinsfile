@@ -32,7 +32,7 @@ pipeline {
 					}
 				}
                 container('pingdatagovernance') {
-                        buildName ${BUILD_NAME}
+                        buildName '${BUILD_NAME}'
                 }
             }
         }
