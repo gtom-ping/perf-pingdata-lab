@@ -29,7 +29,7 @@ pipeline {
 				}
                 container('pingdatagovernance') {
                     script {
-                        buildName '${IMAGE_VERSION}'
+                        buildName "${IMAGE_VERSION}"
                     }
 
                 }
