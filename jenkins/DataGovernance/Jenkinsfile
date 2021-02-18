@@ -28,7 +28,7 @@ pipeline {
 					}
 				}
                 container('pingdatagovernance') {
-                    echo 
+                    sh 'printenv'
                     buildName '${IMAGE_VERSION}'
                 }
             }
