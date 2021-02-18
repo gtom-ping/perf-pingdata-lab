@@ -28,8 +28,10 @@ pipeline {
 					}
 				}
                 container('pingdatagovernance') {
-                    sh 'printenv'
-                    buildName '${IMAGE_VERSION}'
+                    script {
+                        buildName '${IMAGE_VERSION}'
+                    }
+
                 }
             }
         }
