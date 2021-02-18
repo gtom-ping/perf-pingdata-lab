@@ -20,6 +20,10 @@ pipeline {
         }
 
         stage('Wait for Product Availability') {
+            environment {
+                        BUILD_NAME = sh(script: "echo ${IMAGE_VERSION}")
+                    }
+
             steps {
                 waitUntil (initialRecurrencePeriod: 15000) {
 					script {
@@ -28,10 +32,6 @@ pipeline {
 					}
 				}
                 container('pingdatagovernance') {
-                    environment {
-                        BUILD_NAME = echo ("${IMAGE_VERSION}")
-                        // IMAGE_VERSION = echo "${IMAGE_VERSION}"
-                    }
                         buildName ${BUILD_NAME}
                 }
             }
