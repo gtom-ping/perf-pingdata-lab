@@ -28,7 +28,8 @@ pipeline {
 					}
 				}
                 container('pingdatagovernance') {
-                    buildName "${env.IMAGE_VERSION}"
+                    echo 
+                    buildName '${IMAGE_VERSION}'
                 }
             }
         }
