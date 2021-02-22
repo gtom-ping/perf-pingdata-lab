@@ -20,10 +20,6 @@ pipeline {
         }
 
         stage('Wait for Product Availability') {
-            environment {
-                        BUILD_NAME = sh(script: "echo ${IMAGE_VERSION}")
-                    }
-
             steps {
                 waitUntil (initialRecurrencePeriod: 15000) {
 					script {
@@ -31,9 +27,6 @@ pipeline {
 						response.status == 200 || response.status == 503
 					}
 				}
-                container('pingdatagovernance') {
-                        buildName '${BUILD_NAME}'
-                }
             }
         }
 
@@ -41,7 +34,8 @@ pipeline {
             steps {
                 sh '${SERVER_BITS_DIR}/bin/jmeter -n -f -t apache-jmeter/scripts/access-api.jmx -l access-api.csv -q apache-jmeter/scripts/test.properties'
                 //perfReport errorFailedThreshold: 0, errorUnstableThreshold: 0, compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'access-api.csv'
-                perfReport compareBuildPrevious: true, modeOfThreshold: true, modePerformancePerTestCase: true, modeThroughput: true, relativeUnstableThresholdNegative: 10.0, relativeUnstableThresholdPositive: 10.0, sourceDataFiles: 'access-api.csv'
+                // perfReport compareBuildPrevious: true, modeOfThreshold: true, modePerformancePerTestCase: true, modeThroughput: true, relativeUnstableThresholdNegative: 10.0, relativeUnstableThresholdPositive: 10.0, sourceDataFiles: 'access-api.csv'
+                perfReport compareBuildPrevious: true, configType: 'PRT', errorFailedThreshold: 0, errorUnstableThreshold: 0, graphType: 'PRT', percentiles: '90', relativeUnstableThresholdNegative: 20.0, relativeUnstableThresholdPositive: 20.0, sourceDataFiles: 'access-api.csv'
             }
         }
 
@@ -49,7 +43,8 @@ pipeline {
             steps {
                 sh '${SERVER_BITS_DIR}/bin/jmeter -n -f -t apache-jmeter/scripts/deny-api.jmx -l deny-api.csv -q apache-jmeter/scripts/test.properties'
                 //perfReport errorFailedThreshold: 0, errorUnstableThreshold: 0, compareBuildPrevious: true, configType: 'PRT', graphType: 'PRT', modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: 'deny-api.csv'
-                perfReport compareBuildPrevious: true, modeOfThreshold: true, modePerformancePerTestCase: true, modeThroughput: true, relativeUnstableThresholdNegative: 10.0, relativeUnstableThresholdPositive: 10.0, sourceDataFiles: 'deny-api.csv'
+                // perfReport compareBuildPrevious: true, modeOfThreshold: true, modePerformancePerTestCase: true, modeThroughput: true, relativeUnstableThresholdNegative: 10.0, relativeUnstableThresholdPositive: 10.0, sourceDataFiles: 'deny-api.csv'
+                perfReport compareBuildPrevious: true, configType: 'PRT', errorFailedThreshold: 0, errorUnstableThreshold: 0, graphType: 'PRT', percentiles: '90', relativeUnstableThresholdNegative: 20.0, relativeUnstableThresholdPositive: 20.0, sourceDataFiles: 'deny-api.csv'
             }
         }
     }
