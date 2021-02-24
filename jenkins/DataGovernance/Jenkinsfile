@@ -34,7 +34,7 @@ pipeline {
             steps {
                 sh '${SERVER_BITS_DIR}/bin/jmeter -n -f -e -o access-api-detailed -t apache-jmeter/scripts/access-api.jmx -l access-api.csv -q apache-jmeter/scripts/test.properties'
                 perfReport compareBuildPrevious: true, configType: 'PRT', errorFailedThreshold: 0, graphType: 'PRT', percentiles: '90', relativeUnstableThresholdNegative: 10.0, relativeUnstableThresholdPositive: 10.0, sourceDataFiles: 'access-api.csv'
-                publishHTML([allowMissing: false, includes: '**/**', alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'access-api-detailed', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
+                // publishHTML([allowMissing: false, includes: '**/**', alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'access-api-detailed', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
             }
         }
 
